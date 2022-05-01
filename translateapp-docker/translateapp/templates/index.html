@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <nav class="navbar fixed-top navbar-expand-lg bg-dark navbar-dark">
+        <a class="navbar-brand" href="/home">
+            <img src="/static/images/1.png" width="30" height="30" class="d-inline-block align-top" alt="#">
+            DTL TRANSLATE APP
+        </a>
+    </nav>
+    <title>DTL Translate App</title>
+    <style>
+        body {
+            background-image: url("/static/images/3.png");
+        }
+    </style>
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1048.0.min.js"></script>
+</head>
+<script>
+    function Export2Word(filename = "") {
+        var preHtml =
+            "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Export HTML To Doc</title></head><body>";
+        var postHtml = "</body></html>";
+        var html =
+            preHtml + document.getElementById('inputText').value + postHtml;
+
+        var blob = new Blob(["\ufeff", html], {
+            type: "application/msword",
+        });
+        var url =
+            "data:application/vnd.ms-word;charset=utf-8," +
+            encodeURIComponent(html);
+        filename = filename ? filename + ".doc" : "DTL Input.doc";
+        var downloadLink = document.createElement("a");
+        document.body.appendChild(downloadLink);
+        if (navigator.msSaveOrOpenBlob) {
+            navigator.msSaveOrOpenBlob(blob, filename);
+        } else {
+            downloadLink.href = url;
+            downloadLink.download = filename;
+            downloadLink.click();
+        }
+        document.body.removeChild(downloadLink);
+    }
+
+    function Export2Word1(filename = "") {
+        var preHtml =
+            "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Export HTML To Doc</title></head><body>";
+        var postHtml = "</body></html>";
+        var html =
+            preHtml + document.getElementById('outputText').value + postHtml;
+
+        var blob = new Blob(["\ufeff", html], {
+            type: "application/msword",
+        });
+        var url =
+            "data:application/vnd.ms-word;charset=utf-8," +
+            encodeURIComponent(html);
+        filename = filename ? filename + ".doc" : "DTL Output.doc";
+        var downloadLink = document.createElement("a");
+        document.body.appendChild(downloadLink);
+        if (navigator.msSaveOrOpenBlob) {
+            navigator.msSaveOrOpenBlob(blob, filename);
+        } else {
+            downloadLink.href = url;
+            downloadLink.download = filename;
+            downloadLink.click();
+        }
+        document.body.removeChild(downloadLink);
+    }
+</script>
+
+<body class="container-fluid">
+    <img src="/static/images/2.png" align="middle" class="img" alt="Responsive image" vspace="40">
+    <div class="tg">
+        <div class="row mx-2">
+            <div class="col-6 p-3">
+                <div class="row">
+                    <div class="col-9">
+                        <button type="button" class="btn btn-sm btn-success">Source Language Code</button>
+                        <select class="form-select" id="sourceLanguageCodeDropdown">
+                            <option value="auto">Auto</option>
+                            <option value="af">Afrikaans</option>
+                            <option value="sq">Albanian</option>
+                            <option value="am">Amharic</option>
+                            <option value="ar">Arabic*</option>
+                            <option value="hy">Armenian</option>
+                            <option value="az">Azerbaijani</option>
+                            <option value="bn">Bengali</option>
+                            <option value="bs">Bosnian</option>
+                            <option value="bg">Bulgarian</option>
+                            <option value="ca">Catalan</option>
+                            <option value="zh">Chinese (Simplified)*</option>
+                            <option value="zh-TW">Chinese (Traditional)</option>
+                            <option value="hr">Croatian</option>
+                            <option value="cs">Czech</option>
+                            <option value="da">Danish*</option>
+                            <option value="fa-AF">Dari</option>
+                            <option value="nl">Dutch*</option>
+                            <option value="en">English*</option>
+                            <option value="et">Estonian</option>
+                            <option value="fa">Farsi (Persian)</option>
+                            <option value="tl">Filipino, Tagalog</option>
+                            <option value="fi">Finnish</option>
+                            <option value="fr">French*</option>
+                            <option value="fr-CA">French (Canada)</option>
+                            <option value="ka">Georgian</option>
+                            <option value="de">German</option>
+                            <option value="el">Greek</option>
+                            <option value="gu">Gujarati</option>
+                            <option value="ht">Haitian Creole</option>
+                            <option value="ha">Hausa</option>
+                            <option value="he">Hebrew</option>
+                            <option value="hi">Hindi</option>
+                            <option value="hu">Hungarian</option>
+                            <option value="is">Icelandic</option>
+                            <option value="id">Indonesian</option>
+                            <option value="ga">Irish</option>
+                            <option value="it">Italian</option>
+                            <option value="ja">Japanese*</option>
+                            <option value="kn">Kannada</option>
+                            <option value="kk">Kazakh</option>
+                            <option value="ko">Korean*</option>
+                            <option value="lv">Latvian</option>
+                            <option value="lt">Lithuanian</option>
+                            <option value="mk">Macedonian</option>
+                            <option value="ms">Malay</option>
+                            <option value="ml">Malayalam</option>
+                            <option value="mt">Maltese</option>
+                            <option value="mr">Marathi</option>
+                            <option value="mn">Mongolian</option>
+                            <option value="no">Norwegian</option>
+                            <option value="ps">Pashto</option>
+                            <option value="pl">Polish</option>
+                            <option value="pt">Portuguese*</option>
+                            <option value="pt-PT">Portuguese (Portugal)</option>
+                            <option value="pa">Punjabi</option>
+                            <option value="ro">Romanian</option>
+                            <option value="ru">Russian*</option>
+                            <option value="sr">Serbian</option>
+                            <option value="si">Sinhala</option>
+                            <option value="sk">Slovak</option>
+                            <option value="sl">Slovenian</option>
+                            <option value="so">Somali</option>
+                            <option value="es">Spanish*</option>
+                            <option value="es-MX">Spanish (Mexico)</option>
+                            <option value="sw">Swahili</option>
+                            <option value="sv">Swedish</option>
+                            <option value="ta">Tamil</option>
+                            <option value="te">Telugu</option>
+                            <option value="th">Thai</option>
+                            <option value="tr">Turkish</option>
+                            <option value="uk">Ukrainian</option>
+                            <option value="ur">Urdu</option>
+                            <option value="uz">Uzbek</option>
+                            <option value="vi">Vietnamese</option>
+                            <option value="cy">Welsh</option>
+
+                        </select>
+                    </div>
+                    <div class="col-3 d-flex justify-content-end">
+                        <button type="button" class="btn btn-sm btn-warning" name="swapButton" onclick="swapText()">
+                            <i class="fa fa-exchange text-light"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 p-3">
+                <button type="button" class="btn btn-sm btn-success">Target Language Code</button>
+                <select class="form-select" id="targetLanguageCodeDropdown">
+                    <option value="af">Afrikaans</option>
+                    <option value="sq">Albanian</option>
+                    <option value="am">Amharic</option>
+                    <option value="ar">Arabic*</option>
+                    <option value="hy">Armenian</option>
+                    <option value="az">Azerbaijani</option>
+                    <option value="bn">Bengali</option>
+                    <option value="bs">Bosnian</option>
+                    <option value="bg">Bulgarian</option>
+                    <option value="ca">Catalan</option>
+                    <option value="zh">Chinese (Simplified)*</option>
+                    <option value="zh-TW">Chinese (Traditional)</option>
+                    <option value="hr">Croatian</option>
+                    <option value="cs">Czech</option>
+                    <option value="da">Danish*</option>
+                    <option value="fa-AF">Dari</option>
+                    <option value="nl">Dutch*</option>
+                    <option value="en">English*</option>
+                    <option value="et">Estonian</option>
+                    <option value="fa">Farsi (Persian)</option>
+                    <option value="tl">Filipino, Tagalog</option>
+                    <option value="fi">Finnish</option>
+                    <option value="fr">French*</option>
+                    <option value="fr-CA">French (Canada)</option>
+                    <option value="ka">Georgian</option>
+                    <option value="de">German</option>
+                    <option value="el">Greek</option>
+                    <option value="gu">Gujarati</option>
+                    <option value="ht">Haitian Creole</option>
+                    <option value="ha">Hausa</option>
+                    <option value="he">Hebrew</option>
+                    <option value="hi">Hindi</option>
+                    <option value="hu">Hungarian</option>
+                    <option value="is">Icelandic</option>
+                    <option value="id">Indonesian</option>
+                    <option value="ga">Irish</option>
+                    <option value="it">Italian</option>
+                    <option value="ja">Japanese*</option>
+                    <option value="kn">Kannada</option>
+                    <option value="kk">Kazakh</option>
+                    <option value="ko">Korean*</option>
+                    <option value="lv">Latvian</option>
+                    <option value="lt">Lithuanian</option>
+                    <option value="mk">Macedonian</option>
+                    <option value="ms">Malay</option>
+                    <option value="ml">Malayalam</option>
+                    <option value="mt">Maltese</option>
+                    <option value="mr">Marathi</option>
+                    <option value="mn">Mongolian</option>
+                    <option value="no">Norwegian</option>
+                    <option value="ps">Pashto</option>
+                    <option value="pl">Polish</option>
+                    <option value="pt">Portuguese*</option>
+                    <option value="pt-PT">Portuguese (Portugal)</option>
+                    <option value="pa">Punjabi</option>
+                    <option value="ro">Romanian</option>
+                    <option value="ru">Russian*</option>
+                    <option value="sr">Serbian</option>
+                    <option value="si">Sinhala</option>
+                    <option value="sk">Slovak</option>
+                    <option value="sl">Slovenian</option>
+                    <option value="so">Somali</option>
+                    <option value="es">Spanish*</option>
+                    <option value="es-MX">Spanish (Mexico)</option>
+                    <option value="sw">Swahili</option>
+                    <option value="sv">Swedish</option>
+                    <option value="ta">Tamil</option>
+                    <option value="te">Telugu</option>
+                    <option value="th">Thai</option>
+                    <option value="tr">Turkish</option>
+                    <option value="uk">Ukrainian</option>
+                    <option value="ur">Urdu</option>
+                    <option value="uz">Uzbek</option>
+                    <option value="vi">Vietnamese</option>
+                    <option value="cy">Welsh</option>
+                </select>
+            </div>
+        </div>
+        <div class="row mx-2">
+            <div class="col-6 px-3">
+                <textarea class="p-1 w-100" id="inputText" name="inputText" rows="10"
+                    placeholder="Text to translate..."></textarea>
+            </div>
+            <div class="col-6 px-3">
+                <textarea class="p-1 w-100" id="outputText" name="outputText" rows="10"
+                    placeholder="Translated text..."></textarea>
+            </div>
+        </div>
+        <div class="row m-2">
+            <div class="col-6">
+                <button type="submit" class="btn btn-warning" name="translateButton" id="translate"
+                    onclick="doTranslate()">TRANSLATE</button>
+                <button type="submit" class="btn btn-primary" name="synthesizeButton" onclick="doSynthesizeInput()"><i
+                        class="fa fa-volume-up text-light"></i></button>
+                <button type="submit" class="btn btn-danger" name="clearButton" onclick="clearInputs()">CLEAR</button>
+                <button class="btn btn-success" id="upload" onclick="loadFileAsText()"><i
+                        class="fa fa-upload text-light"></i></button>
+                <button class="btn btn-danger" id="test" onclick="Export2Word()"><i
+                        class="fa fa-download text-light"></i></button>
+                <form method="POST" , action="/extracttext" , enctype="multipart/form-data"
+                    class="main__menu--tool-form1">
+                    <input style="color:white" type="file" , name="filename" , id="filename" class="filebutton" />
+                    <button type="submit" class="btn btn-primary">EXTRACT TEXT</button>
+                    <!--                <button class="btn btn-success" onclick="Export2Word();">DOWNLOAD FILE</button>-->
+
+                </form>
+
+            </div>
+
+            <div class="col-6">
+                <button type="submit" class="btn btn-primary" name="synthesizeButton" onclick="doSynthesizeOutput()"><i
+                        class="fa fa-volume-up text-light"></i></button>
+                <button class="btn btn-warning" id="copyToClipboard-a" onclick="copyToClipboard()"><i
+                        class="fa fa-clone text-light"></i></button>
+                <button class="btn btn-danger" id="test1" onclick="Export2Word1()"><i
+                        class="fa fa-download text-light"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        // set the focus to the input box
+        document.getElementById("inputText").focus();
+
+
+        AWS.config.region = 'us-east-1'; // Region
+        AWS.config.credentials = new AWS.Credentials("AKIA6GUTAKM336BHHHUD", "X/7RtPzVHDrTJ/msLgZ70qK4/WlZ0ba7k9zUcr4q");
+
+        var translate = new AWS.Translate({ region: AWS.config.region });
+        var polly = new AWS.Polly();
+
+        document.getElementById("dload").onclick = function () {
+            var l = document.createElement("a");
+            l.href = "data:text/plain;charset=UTF-8," + document.getElementById("outputText").value;
+            l.setAttribute("output_download", document.getElementById("dload-fn").value);
+            l.click();
+        }
+
+        function loadFileAsText() {
+            var fileToLoad = document.getElementById("filename").files[0];
+
+            var fileReader = new FileReader();
+            fileReader.onload = function (fileLoadedEvent) {
+                var textFromFileLoaded = fileLoadedEvent.target.result;
+                document.getElementById("inputText").value = textFromFileLoaded;
+            };
+            fileReader.readAsText(fileToLoad, "UTF-8");
+        }
+
+        document.getElementById('inputText').onkeypress = function (e) {
+            if (e.keyCode == 13) {
+                document.getElementById('translate').click();
+            }
+        }
+
+        function doTranslate() {
+            var inputText = document.getElementById('inputText').value;
+            if (!inputText) {
+                alert("Vui lòng nhập văn bản bạn muốn dịch");
+                exit();
+            }
+
+            // get the language codes
+            var sourceDropdown = document.getElementById("sourceLanguageCodeDropdown");
+            var sourceLanguageCode = sourceDropdown.options[sourceDropdown.selectedIndex].value;
+
+            var targetDropdown = document.getElementById("targetLanguageCodeDropdown");
+            var targetLanguageCode = targetDropdown.options[targetDropdown.selectedIndex].value;
+
+            var params = {
+                Text: inputText,
+                SourceLanguageCode: sourceLanguageCode,
+                TargetLanguageCode: targetLanguageCode
+            };
+
+            translate.translateText(params, function (err, data) {
+                if (err) {
+                    console.log(err, err.stack);
+                    alert("Error calling Amazon Translate. " + err.message);
+                    return;
+                }
+                if (data) {
+                    var outputTextArea = document.getElementById('outputText');
+                    outputTextArea.value = data.TranslatedText;
+                }
+            });
+        }
+
+        function doSynthesizeInput() {
+            var text = document.getElementById('inputText').value.trim();
+            if (!text) {
+                return;
+            }
+            var sourceLanguageCode = document.getElementById("sourceLanguageCodeDropdown").value;
+            doSynthesize(text, sourceLanguageCode);
+        }
+
+        function doSynthesizeOutput() {
+            var text = document.getElementById('outputText').value.trim();
+            if (!text) {
+                return;
+            }
+            var targetLanguageCode = document.getElementById("targetLanguageCodeDropdown").value;
+            doSynthesize(text, targetLanguageCode);
+        }
+
+        function doSynthesize(text, languageCode) {
+            var voiceId;
+            switch (languageCode) {
+                case "ar":
+                    voiceId = "Zeina";
+                    break;
+                case "da":
+                    voiceId = "Mads";
+                    break;
+                case "nl":
+                    voiceId = "Ruben";
+                    break;
+                case "de":
+                    voiceId = "Marlene";
+                    break;
+                case "zh":
+                    voiceId = "Zhiyu";
+                    break;
+                case "en":
+                    voiceId = "Joanna";
+                    break;
+                case "es":
+                    voiceId = "Penelope";
+                    break;
+                case "fr":
+                    voiceId = "Celine";
+                    break;
+                case "pt":
+                    voiceId = "Vitoria";
+                    break;
+                case "ja":
+                    voiceId = "Takumi";
+                    break;
+                case "ko":
+                    voiceId = "Seoyeon";
+                    break;
+                case "ru":
+                    voiceId = "Maxim";
+                    break;
+                default:
+                    voiceId = null;
+                    break;
+            }
+            if (!voiceId) {
+                alert("Hiện tại chưa hỗ trợ giọng nói cho ngôn ngữ \"" + languageCode + "\"");
+                return;
+            }
+            var params = {
+                OutputFormat: "mp3",
+                SampleRate: "8000",
+                Text: text,
+                TextType: "text",
+                VoiceId: voiceId
+            };
+            polly.synthesizeSpeech(params, function (err, data) {
+                if (err) {
+                    console.log(err, err.stack); // an error occurred
+                    alert("Error calling Amazon Polly. " + err.message);
+                }
+                else {
+                    var uInt8Array = new Uint8Array(data.AudioStream);
+                    var arrayBuffer = uInt8Array.buffer;
+                    var blob = new Blob([arrayBuffer]);
+                    var url = URL.createObjectURL(blob);
+
+                    audioElement = new Audio([url]);
+                    audioElement.play();
+                }
+            });
+        }
+
+        function clearInputs() {
+            document.getElementById('inputText').value = "";
+            document.getElementById('outputText').value = "";
+            document.getElementById("sourceLanguageCodeDropdown").value = "auto";
+            document.getElementById("targetLanguageCodeDropdown").value = "vi";
+            document.getElementById("filename").value = "";
+        }
+        function swapText() {
+            let inputText = document.getElementById('inputText').value;
+            let outputText = document.getElementById('outputText').value;
+            document.getElementById('inputText').value = outputText;
+            document.getElementById('outputText').value = inputText;
+
+            let source = document.getElementById("sourceLanguageCodeDropdown").value;
+            let target = document.getElementById("targetLanguageCodeDropdown").value;
+            document.getElementById("sourceLanguageCodeDropdown").value = target;
+            document.getElementById("targetLanguageCodeDropdown").value = source;
+        }
+    </script>
+    <p id="data_extract" hidden>{{jsonData}}</p>
+    <script>
+        let data = document.getElementById('data_extract').innerHTML;
+        let dataFromApi = JSON.parse(data);
+        let value = dataFromApi.text
+        console.log("value json test=", data);
+        document.getElementById('inputText').value = value
+    </script>
+</body>
+<footer>
+    <div class="jumbotron">
+        <h1>DTL TRANSLATE APP</h1>
+        <p> Trang web dịch thuật hàng đầu Việt Nam</p>
+        <p> Diệp Tấn Luân &copy; 2021</p>
+    </div>
+</footer>
+
+
+</html>
