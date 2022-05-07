@@ -1,8 +1,8 @@
-version: '3'
+version: "3"
 
 services:
-  translateapp:
-    build: ./translateapp-docker
+  translate-app:
+    build: ./aws-translate-app
     ports:
       - "8000:8000"
     network_mode: host
