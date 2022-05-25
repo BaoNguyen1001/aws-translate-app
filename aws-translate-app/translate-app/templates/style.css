@@ -1,0 +1,58 @@
+.container {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.sub-container {}
+
+.content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.select-language {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+}
+
+#sourceLanguageCodeDropdown {
+    width: 60px;
+    height: 20px;
+    margin-left: 10px;
+}
+
+.left-side,
+.right-side {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.group-btn {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.btn {
+    width: 100px;
+    height: 30px;
+    margin-right: 10px;
+}
+
+.textract {
+    margin-top: 20px;
+    margin-left: 55px;
+}
+
+.translate-document {
+    margin-top: 20px;
+    margin-left: 55px;
+}
