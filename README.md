@@ -26,7 +26,7 @@
 
 - Bước 2: Kết nối tới máy ảo EC2, cài đặt docker và docker-compose.
 
-- Bước 3: Clone dự án về máy ảo EC2: https://github.com/BaoNguyen1001/aws-translate-web.git
+- Bước 3: Clone dự án về máy ảo EC2: https://github.com/BaoNguyen1001/aws-translate-app.git
 
 - Bước 3: Cấu hình aws_access_key_id và aws_secret_access_key
 
