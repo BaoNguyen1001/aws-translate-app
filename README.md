@@ -40,4 +40,4 @@
 
 - Bước 4: Build và run file docker-compose
 
-- Bước 5: Test web bằng địa chỉ máy ảo EC2 port 5000
+- Bước 5: Test web bằng địa chỉ máy ảo EC2 port 8000
