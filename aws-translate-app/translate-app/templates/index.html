@@ -261,7 +261,7 @@
                         placeholder="Translated text..."></textarea>
                     <div class="group-btn">
                         <button class="poly-btn btn"><i class="fa fa-volume-up text-light"></i></button>
-                        <button class="download-btn btn"><i class="fa fa-download"></i></button>
+                        <button class="download-btn btn"><i class="fa fa-download" onclick="Export2Word()"></i></button>
                     </div>
                 </div>
             </div>
@@ -278,16 +278,16 @@
         </div>
         <div class="translate-document">
             <p>Translate document</p>
-            <form>
-                <input style="color:black" type="file" , name="filename" , id="filename" class="filebutton" />
-                <button type="submit" class="btn btn-primary">EXTRACT</button>
+            <form method="POST" , action="/translatedocument" , enctype="multipart/form-data" class="main__menu--tool-form1">
+                <input style="color:black" type="file" , name="filenameDocument" , id="filenameDocument" class="filebutton" />
                 <!--                <button class="btn btn-success" onclick="Export2Word();">DOWNLOAD FILE</button>-->
+                <button type="submit" id="btnDocument" class="btn btn-primary"">EXTRACT</button>
 
             </form>
         </div>
     </div>
 
-    <script type="text/javascript">
+    <script>
         // set the focus to the input box
         document.getElementById("inputText").focus();
 
@@ -296,7 +296,7 @@
 
         var translate = new AWS.Translate({ region: AWS.config.region });
         var polly = new AWS.Polly();
-        var textract = new AWS.Textract();
+        var s3 = new AWS.S3();
 
         document.getElementById("dload").onclick = function () {
             var l = document.createElement("a");
@@ -304,6 +304,32 @@
             l.setAttribute("output_download", document.getElementById("dload-fn").value);
             l.click();
         }
+
+        function Export2Word(filename = "") {
+                var preHtml =
+                    "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Export HTML To Doc</title></head><body>";
+                var postHtml = "</body></html>";
+                var html =
+                    preHtml + document.getElementById('inputText').value + postHtml;
+
+                var blob = new Blob(["\ufeff", html], {
+                    type: "application/msword",
+                });
+                var url =
+                    "data:application/vnd.ms-word;charset=utf-8," +
+                    encodeURIComponent(html);
+                filename = filename ? filename + ".doc" : "DTL Input.doc";
+                var downloadLink = document.createElement("a");
+                document.body.appendChild(downloadLink);
+                if (navigator.msSaveOrOpenBlob) {
+                    navigator.msSaveOrOpenBlob(blob, filename);
+                } else {
+                    downloadLink.href = url;
+                    downloadLink.download = filename;
+                    downloadLink.click();
+                }
+                document.body.removeChild(downloadLink);
+            }
 
         function loadFileAsText() {
             var fileToLoad = document.getElementById("filename").files[0];
@@ -463,7 +489,7 @@
             document.getElementById("targetLanguageCodeDropdown").value = source;
         }
     </script>
-    <p id="data_extract" hidden>{{jsonData}}</p>
+    <p id="data_extract">{{jsonData}}</p>
     <script>
         let data = document.getElementById('data_extract').innerHTML;
         let dataFromApi = JSON.parse(data);
