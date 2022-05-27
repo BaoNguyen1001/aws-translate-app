@@ -170,7 +170,7 @@
                         <button class="clear-btn btn" onclick="clearInputs()">Clear</button>
                         <button class="btn upload-btn" id="upload" onclick="loadFileAsText()"><i
                                 class="fa fa-upload text-light"></i></button>
-                        <button class="download-btn btn"><i class="fa fa-download"></i></button>
+                        <button class="download-btn btn"><i class="fa fa-download" onclick="Export2Word()"></i></button>
                     </div>
                 </div>
                 <div class="swap">
@@ -261,7 +261,7 @@
                         placeholder="Translated text..."></textarea>
                     <div class="group-btn">
                         <button class="poly-btn btn"><i class="fa fa-volume-up text-light"></i></button>
-                        <button class="download-btn btn"><i class="fa fa-download" onclick="Export2Word()"></i></button>
+                        <button class="download-btn btn"><i class="fa fa-download" onclick="Export2Word1()"></i></button>
                     </div>
                 </div>
             </div>
@@ -318,7 +318,7 @@
                 var url =
                     "data:application/vnd.ms-word;charset=utf-8," +
                     encodeURIComponent(html);
-                filename = filename ? filename + ".doc" : "DTL Input.doc";
+                filename = filename ? filename + ".doc" : "Translate_Input.doc";
                 var downloadLink = document.createElement("a");
                 document.body.appendChild(downloadLink);
                 if (navigator.msSaveOrOpenBlob) {
@@ -331,6 +331,31 @@
                 document.body.removeChild(downloadLink);
             }
 
+            function Export2Word1(filename = "") {
+                    var preHtml =
+                        "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Export HTML To Doc</title></head><body>";
+                    var postHtml = "</body></html>";
+                    var html =
+                        preHtml + document.getElementById('outputText').value + postHtml;
+
+                    var blob = new Blob(["\ufeff", html], {
+                        type: "application/msword",
+                    });
+                    var url =
+                        "data:application/vnd.ms-word;charset=utf-8," +
+                        encodeURIComponent(html);
+                    filename = filename ? filename + ".doc" : "Translate_Output.doc";
+                    var downloadLink = document.createElement("a");
+                    document.body.appendChild(downloadLink);
+                    if (navigator.msSaveOrOpenBlob) {
+                        navigator.msSaveOrOpenBlob(blob, filename);
+                    } else {
+                        downloadLink.href = url;
+                        downloadLink.download = filename;
+                        downloadLink.click();
+                    }
+                    document.body.removeChild(downloadLink);
+                }
         function loadFileAsText() {
             var fileToLoad = document.getElementById("filename").files[0];
 
