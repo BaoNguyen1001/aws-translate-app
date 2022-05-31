@@ -32,12 +32,15 @@
 
   - Configuration index.html
 
-    ![](/aws-translate-app/translate-app/assets/config_index.png)
+    ![](aws-translate-app/translate-app/assets/config_index.png)
 
   - Configuration app.py
 
-    ![](/aws-translate-app/translate-app/assets/config_app.png)
+    ![](aws-translate-app/translate-app/assets/config_app.png)
 
 - Bước 4: Build và run file docker-compose
+  + cd aws-translate-app
+  + docker-compose build
+  + docker-compose up
 
 - Bước 5: Test web bằng địa chỉ máy ảo EC2 port 8000
