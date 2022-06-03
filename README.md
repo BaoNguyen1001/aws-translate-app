@@ -31,10 +31,14 @@
 - Bước 3: Cấu hình aws_access_key_id và aws_secret_access_key
 
   - Configuration index.html
+    
+    cd aws-translate-app/translate-app/templates/index.html
 
     ![](aws-translate-app/translate-app/assets/config_index.png)
 
   - Configuration app.py
+
+    cd aws-translate-app/translate-app/app.py
 
     ![](aws-translate-app/translate-app/assets/config_app.png)
 
