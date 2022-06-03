@@ -28,7 +28,7 @@
 
 - Bước 3: Clone dự án về máy ảo EC2: https://github.com/BaoNguyen1001/aws-translate-app.git
 
-- Bước 3: Cấu hình aws_access_key_id và aws_secret_access_key
+- Bước 4: Cấu hình aws_access_key_id và aws_secret_access_key
 
   - Configuration index.html
     
@@ -42,9 +42,9 @@
 
     ![](aws-translate-app/translate-app/assets/config_app.png)
 
-- Bước 4: Build và run file docker-compose
+- Bước 5: Build và run file docker-compose
   + cd aws-translate-app
   + docker-compose build
   + docker-compose up
 
-- Bước 5: Test web bằng địa chỉ máy ảo EC2 port 8000
+- Bước 6: Test web bằng địa chỉ máy ảo EC2 port 8000
